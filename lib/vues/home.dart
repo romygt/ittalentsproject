@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
+
               height: 300,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -119,7 +120,16 @@ class _HomePageState extends State<HomePage> {
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, index) {
                                 Formation formation = snapshot.data[index];
-
+                                print(formation.image.guid);
+                                print(formation.title.rendered);
+                                print(formation.date);
+                                print( formation.rating);
+                                    print(formation.duration);
+                                    print( formation.dateStatus[0]);
+                                print(formation.profile);
+                                print(formation.image.postTitle);
+                                print( formation.content.rendered);
+                                print(formation.link);
                                 return Column(children: [FadeAnimation(1.2,
                                     Formationlist_screen(
                                       imgUrl: formation.image.guid,
@@ -130,7 +140,8 @@ class _HomePageState extends State<HomePage> {
                                       confirmed: formation.dateStatus[0],
                                       formateur: formation.profile,
                                        partenaire: formation.image.postTitle,
-                                       content: formation.content.rendered,)),
+                                       content: formation.content.rendered,
+                                       link:formation.link)),
                                 ]);
                               }
                           );
@@ -195,6 +206,7 @@ class Formationlist_screen extends StatelessWidget {
   final String partenaire;
   final String content;
   final String formateur;
+  final String link;
 
   Formationlist_screen(
       { @required this.imgUrl,
@@ -205,7 +217,8 @@ class Formationlist_screen extends StatelessWidget {
         @required this.confirmed,
         @required this.partenaire,
         @required this.content,
-        @required this.formateur
+        @required this.formateur,
+        @required this.link
        }     );
 
   @override
@@ -215,7 +228,7 @@ class Formationlist_screen extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Details_formation(
+                builder: (context) => FadeAnimation(1, Details_formation(
                 rating: rating,
                 imgUrl: imgUrl,
                 title: title,
@@ -224,7 +237,8 @@ class Formationlist_screen extends StatelessWidget {
                 duration: duration,
                 partenaire: partenaire,
                 content: content,
-                formateur: formateur)));
+                formateur: formateur,
+                link:link))));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 8),
@@ -326,7 +340,7 @@ class Formationlist_screen extends StatelessWidget {
 
                   children: [
                     Text(
-                      "$rating",
+                     ("$rating" != "[]" ) ? "$rating":0.toString(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
